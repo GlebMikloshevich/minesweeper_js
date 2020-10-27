@@ -1,0 +1,137 @@
+html{
+	margin: 0;
+	padding: 0;
+	
+}
+
+
+body{
+	margin: 0;
+	padding: 0;
+	background: url(./img/background.png) no-repeat center fixed;
+}
+
+.wrapper{
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+
+.game-wrapper{
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	height: auto;
+
+}
+
+.header-wrapper{
+	width: 100%;
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	padding: 40px 0; 
+	
+}
+
+.left{
+	display: flex;
+	flex-wrap: nowrap;
+}
+.bombs-wrapper, .time-wrapper{
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+p{
+	display: inline;
+	font-size: 24px;
+	margin: 0;
+}
+
+
+/* HIDE RADIO */
+[type=radio] { 
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* IMAGE STYLES */
+[type=radio] + img {
+  cursor: pointer;
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + img {
+  outline: 2px solid #f00;
+}
+
+.difficulty-img{
+	width: 50px;
+}
+
+.field-row{
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+}
+.field-cell{
+	width: 44px;
+	height: 44px;
+	margin: 0px;
+	background-color: #C0C0C0;
+	border-right:5px outset #D3D3D3;
+	border-bottom:5px outset #D3D3D3;
+	border-top: 5px outset #DCDCDC;
+	border-left: 5px outset #DCDCDC;
+	box-sizing: border-box;
+	text-align: center;
+	cursor: default;
+	font-size: 28px;
+}
+
+.field-cell > img{
+	width: 100%;
+	height: 100%;
+	position: relative;
+	
+
+}
+
+.pop-up-menu{
+	z-index: 2;
+	display: none;
+	position: absolute;
+	text-align: center;
+
+	width: 300px;
+	left: 50%;
+	margin-left: -150px;
+	top: 30%;
+	margin-top: 60px 
+	height: 120px;
+
+	background-color: white;
+	border: 1px solid darkgrey;
+	border-radius: 5px;
+	box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);
+}
+.pop-up-text{
+	padding-top: 16px;
+
+}
+button{
+	vertical-align: bottom;
+	margin-top: 0px;
+	width: 110px;
+	height: 50px;
+}
+
+.flag{
+	top: -115%;
+	z-index: 1;
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Minesweeper</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+	<div class="wrapper">
+		<div class="header-wrapper">
+			<div class="time-wrapper">
+				<p>Время:</p>
+				<div class="time"><p>100</p></div>
+			</div>
+
+			<div class="remake">
+				<img class="difficulty-img" src="./img/restart.webp" onclick="remake()">
+			</div>
+			<div class="left">
+
+				<div class="difficulty">
+					<label onclick="remake()">
+						<input type="radio" name="difficulty" value="easy" >
+						<img class="difficulty-img" src="./img/easy.png" >
+					</label>
+
+					<label onclick="remake()">
+						<input type="radio" name="difficulty" value="medium" checked="" >
+						<img class="difficulty-img" src="./img/medium.png"   >
+					</label>
+
+					<label onclick="remake()">
+						<input type="radio" name="difficulty" value="hard">
+						<img class="difficulty-img" src="./img/hard.png" >
+					</label>
+				</div>
+
+			<div class="bombs-wrapper">
+				<p>Бобм:</p>
+				<div ><p class="bombs">100</p></div>
+			</div>
+			</div>
+
+		</div>
+		<br>
+		<div class="game-wrapper">
+			
+		</div>
+	</div>
+	<div class="pop-up-menu victory">
+		<div >
+			<p> Вы победили</p>
+			
+			<div class="pop-up-text">
+				<button onclick="remake()">Начать сначала</button>
+				<button onclick="hide()">Скрыть</button>
+			</div>
+		</div>
+	</div>
+	
+	<div class="pop-up-menu defeat">
+		<div >
+			<p> Вы проиграли</p>
+			
+			<div class="pop-up-text">
+				<button onclick="remake()">Начать сначала</button>
+				<button onclick="hide()">Скрыть </button>
+			</div>
+		</div>
+	</div>
+
+	<script src="script.js"type="text/javascript"></script>
+</body>
+</html>
