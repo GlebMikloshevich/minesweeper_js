@@ -492,6 +492,9 @@ function getStyleSheet(unique_title) {
 function game_set_time(){
 	let timeDiv = document.getElementsByClassName("time")[0];
 	let time = Number(timeDiv.innerHTML);
-	if (time < 999) 
+	if (time < 999){
 		timeDiv.innerHTML = Number(timeDiv.innerHTML) + 1;
+	} else {
+		timeDiv.innerHTML = "999+";
+	}
 }
