@@ -15,6 +15,8 @@ class Game{
 	timerId = 0;
 
 	constructor(x, y, bombs){
+		this.cur_x = 0;
+		this.cur_y = 0;
         this.x = x;
         this.y = y;
         this.bombs = bombs;
@@ -95,10 +97,17 @@ class Game{
 			//console.log(x, y);
 			//paint
 			if (this.field[x][y].isOpen){
-				div[i].style.borderStyle="solid";
-				div[i].style.borderColor="grey";
-				div[i].style.borderWidth="1px";
+				
+				if (this.cur_x === x && this.cur_y === y){
+					div[i].style.borderWidth="0.45vh";
+					div[i].style.borderStyle = "outset";
+					div[i].style.borderColor="#FF0066";
 
+				} else {
+					div[i].style.borderWidth="1px";
+					div[i].style.borderStyle="solid";
+				div[i].style.borderColor="grey";
+				}
 
 			}
 			if (this.field[x][y].isFlag && this.field[x][y].isBomb && this.isDead){
@@ -188,7 +197,6 @@ class Game{
 
 	game_won(){
 		if (!this.gameWon){
-
 			let div = document.getElementsByClassName("victory")[0];
 			div.style.display="block";
 			this.delete_timer();
@@ -217,6 +225,7 @@ class Game{
 	draw_field(){
 		return 0; //todo
 	}
+
 	update_counter(){
 		let bomb_div = document.getElementsByClassName("bombs")[0];
 		bomb_div.innerHTML = this.bomb_counter;
@@ -389,6 +398,21 @@ class Game{
 
 		return bombs;
 	}
+
+	hightlight(x, y){
+		if (x < 0 || y <0 || x >= this.x || y>= this.y)
+			return 0;
+		var cells = document.getElementsByClassName("field-cell");
+		cells[this.y*this.cur_x +this.cur_y].style.borderTop = "0.45vh outset #DCDCDC";
+		cells[this.y*this.cur_x +this.cur_y].style.borderRight = "0.45vh outset #D3D3D3";
+		cells[this.y*this.cur_x +this.cur_y].style.borderBottom = "0.45vh outset #D3D3D3";
+		cells[this.y*this.cur_x +this.cur_y].style.borderLeft = "0.45vh outset #DCDCDC";
+			
+		cells[this.y*x+y].style.borderColor = "#FF0066";
+		this.cur_x = x;
+		this.cur_y = y;
+		this.paint();
+	}
 };
 
 
@@ -410,6 +434,65 @@ game_wr.addEventListener("mouseup", (e) => {
 		}
 		
 });
+
+game_wr.addEventListener('mousemove', e => {
+ 		if (e.target.className == "field-cell"){ //лкм
+		    for (let i = 0; i < e.target.parentNode.parentNode.childNodes.length; i++)
+		    	if (e.target.parentNode == e.target.parentNode.parentNode.childNodes[i])
+		    		x = i;
+		    for (let i = 0; i < e.target.parentNode.childNodes.length; i++)
+		    	if (e.target == e.target.parentNode.childNodes[i])
+		    		y = i;
+		    a.hightlight(x, y);
+		    }
+});
+
+document.addEventListener('keypress', (event) => {
+  	const keyName = event.key;
+  	 //console.log('key: ' + keyName);
+  	 if ((keyName == 'w' || keyName == 'ц') && !a.isDead){
+  	 	a.hightlight(a.cur_x-1, a.cur_y);
+
+  	 } else if ((keyName == 's' || keyName == 'ы') && !a.isDead){
+  	 	a.hightlight(a.cur_x+1, a.cur_y);
+  	 } else if ((keyName == 'a' || keyName == 'ф') && !a.isDead) {
+		a.hightlight(a.cur_x, a.cur_y-1);
+	 } else if ((keyName == 'd' || keyName == 'в') && !a.isDead){
+	 	a.hightlight(a.cur_x, a.cur_y+1);
+	 } else if (keyName == "Enter" && !a.isDead){
+	 	a.open_tile(a.cur_x, a.cur_y);
+	 } else if (keyName == ' ' && !a.isDead){
+	 	a.set_flag(a.cur_x, a.cur_y);
+	 } else if (keyName == 'f' || keyName == 'а'){
+	 	//flag on
+	 	document.getElementsByClassName("no-flag")[0].checked = !document.getElementsByClassName("no-flag")[0].checked;
+	 } else if (keyName == 'h' || keyName == 'р'){
+	 	//help
+	 	help();
+	 	
+	 } else if (keyName == 'r' || keyName == 'к'){
+	 	//restart
+	 	remake();
+	 } else if (keyName == '1'){
+	 	//easy
+	 	radio = document.getElementsByName("difficulty");
+	 	radio[0].checked = true;
+	 	remake();
+	 }  else if (keyName == '2'){
+	 	//medium
+	 	radio = document.getElementsByName("difficulty");
+	 	radio[1].checked = true;
+	 	remake();
+	 } else if (keyName == '3'){
+	 	//hard
+	 	radio = document.getElementsByName("difficulty");
+	 	radio[2].checked = true;
+	 	remake();
+	 }
+
+
+});
+
 	//двойной клик по клетке, чтобы открыть все вокруг.
 game_wr.addEventListener("dblclick", (e) =>{ 
 		for (let i = 0; i < e.target.parentNode.parentNode.childNodes.length; i++)
@@ -424,14 +507,10 @@ game_wr.addEventListener("dblclick", (e) =>{
 		
 });
 
+
+
 game_wr.oncontextmenu = (function(e){
 	e.preventDefault();
-	//console.log(e.target.tagName);
-	//console.log(e.target);
-	//console.log(e.target.parentNode);
-	//console.log(e.target.parentNode.parentNode);
-	//console.log(e.target.parentNode.parentNode.parentNode);
-
 	if (e.target.tagName === "IMG"){
 		for (let i = 0; i < e.target.parentNode.parentNode.parentNode.childNodes.length; i++)
 		    	if (e.target.parentNode.parentNode == e.target.parentNode.parentNode.parentNode.childNodes[i])
@@ -467,9 +546,8 @@ function remake(){
 	radio = document.getElementsByName("difficulty");
 	a.delete_timer();
 		//a = new Game(10, 4, 4);
-	div = getStyleSheet("field-cell");
 	if (radio[0].checked){
-		a = new Game(8, 8, 15);
+		a = new Game(8, 8, 10);
 	} else if (radio[1].checked){
 		a = new Game(16, 16, 40);
 	} else {
@@ -477,18 +555,7 @@ function remake(){
 	}
 }
 
-function getStyleSheet(unique_title) {
-  for(var i=0; i<document.styleSheets.length; i++) {
-    var sheet = document.styleSheets[i];
-    if(sheet.title == unique_title) {
-      return sheet;
-    }
-  }
-}
-
 //счетчик времени
-
-
 function game_set_time(){
 	let timeDiv = document.getElementsByClassName("time")[0];
 	let time = Number(timeDiv.innerHTML);
@@ -496,5 +563,15 @@ function game_set_time(){
 		timeDiv.innerHTML = Number(timeDiv.innerHTML) + 1;
 	} else {
 		timeDiv.innerHTML = "999+";
+	}
+}
+
+function help(){
+	let div = document.getElementsByClassName("help")[0];
+	if (div.style.display == "block"){
+		console.log('1');
+		div.style.display = "none";
+	} else {
+		div.style.display = "block";
 	}
 }

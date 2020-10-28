@@ -204,6 +204,10 @@ p{
 	padding-top: 16px;
 
 }
+.help{
+	width: 500px;
+	margin-left: -250px;
+}
 button{
 	vertical-align: bottom;
 	margin-top: 0px;
