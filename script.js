@@ -1,4 +1,3 @@
-var a;
 class Tile{
 	value = 0;
 	isFlag = false;
@@ -13,6 +12,8 @@ class Game{
 	gameWon = false;
 	gameStart = false;
 	time = 0;
+	timerId = 0;
+
 	constructor(x, y, bombs){
         this.x = x;
         this.y = y;
@@ -20,6 +21,7 @@ class Game{
         this.bomb_counter = bombs;
         this.tiles_to_open = x*y-bombs;
         this.generate_field();
+        
         //this.set_weights();
 	}
 
@@ -48,6 +50,7 @@ class Game{
 			wrapper.appendChild(row);
         }
         this.update_counter();
+
 
     }
 
@@ -185,18 +188,23 @@ class Game{
 
 	game_won(){
 		if (!this.gameWon){
+
 			let div = document.getElementsByClassName("victory")[0];
 			div.style.display="block";
+			this.delete_timer();
 			this.gameWon = true;
 		}
 	}
 	game_lost(){
 			let div = document.getElementsByClassName("defeat")[0];
 			div.style.display="block";
+			this.delete_timer();
 			this.draw_field();
 	}
 
-
+	delete_timer(){
+		clearInterval(this.timerId);
+	}
 
 	print(){
 		for (let i = 0; i < this.x; i++)
@@ -219,7 +227,11 @@ class Game{
 		if (this.starGame){
 			this.generate_bombs(i, j);
 			this.set_weights();
-			setInterval(game_set_time, 1000);
+			let timeDiv = document.getElementsByClassName("time")[0];
+			timeDiv.innerHTML = "0";
+			let chb = document.getElementsByClassName("no-flag")[0];
+			this.noFlag = chb.checked;
+			this.timerId = setInterval(() => game_set_time(), 1000);
 			this.starGame = false;
 		}
 
@@ -321,7 +333,7 @@ class Game{
 	}
 
 	set_flag(x, y){
-		if (this.gameWon || !this.gameStart){
+		if (this.gameWon || !this.gameStart || this.noFlag){
 			//console.log("game is won");
 			return 0;
 		}
@@ -379,9 +391,13 @@ class Game{
 	}
 };
 
+
+var a = new Game(16, 16, 40);
+
+
 var game_wr = document.getElementsByClassName("game-wrapper")[0];
 game_wr.addEventListener("mouseup", (e) => {
-		if (e.which === 1){ //лкм
+		if (e.which === 1 && e.target.className == "field-cell"){ //лкм
 		    for (let i = 0; i < e.target.parentNode.parentNode.childNodes.length; i++)
 		    	if (e.target.parentNode == e.target.parentNode.parentNode.childNodes[i])
 		    		var x = i; //строка от (1 до this.x)
@@ -392,6 +408,7 @@ game_wr.addEventListener("mouseup", (e) => {
 		    a.open_tile(x, y); //field - экземпляр класса Game
 			//console.log("row ", x, "\n column ", y);
 		}
+		
 });
 	//двойной клик по клетке, чтобы открыть все вокруг.
 game_wr.addEventListener("dblclick", (e) =>{ 
@@ -424,7 +441,6 @@ game_wr.oncontextmenu = (function(e){
 		    		var y = i;
 		//console.log("flag to", x, y);
 	} else {
-		//console.log(e.target);
 	   for (let i = 0; i < e.target.parentNode.parentNode.childNodes.length; i++)
 		    	if (e.target.parentNode == e.target.parentNode.parentNode.childNodes[i])
 		    		var x = i; //строка от (1 до this.x)
@@ -449,10 +465,11 @@ document.addEventListener("load", remake());
 function remake(){
 	hide();
 	radio = document.getElementsByName("difficulty");
+	a.delete_timer();
 		//a = new Game(10, 4, 4);
 	div = getStyleSheet("field-cell");
 	if (radio[0].checked){
-		a = new Game(8, 8, 10);
+		a = new Game(8, 8, 15);
 	} else if (radio[1].checked){
 		a = new Game(16, 16, 40);
 	} else {
@@ -474,6 +491,7 @@ function getStyleSheet(unique_title) {
 
 function game_set_time(){
 	let timeDiv = document.getElementsByClassName("time")[0];
-	timeDiv.innerHTML = Number(timeDiv.innerHTML) + 1;
-
+	let time = Number(timeDiv.innerHTML);
+	if (time < 999) 
+		timeDiv.innerHTML = Number(timeDiv.innerHTML) + 1;
 }

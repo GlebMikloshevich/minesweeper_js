@@ -4,50 +4,69 @@
 	<title>Minesweeper</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<link href="https://fonts.googleapis.com/css2?family=Turret+Road:wght@500&display=swap" rel="stylesheet"> 
 </head>
 <body>
 	<div class="wrapper">
 		<div class="header-wrapper">
-			<div class="time-wrapper">
-				<p>Время: </p>
-				<div ><p class="time">0</p></div>
-			</div>
+			<div class="menu-top" style="font-size: 26px;">
+				<div class="menu-item">
+					<div>Время: </div>
+					<div class="time">0</div>
+				</div>
+			
+				<div class="menu-item" >
+					<div>бобм:</div>
+					<div class="bombs">100</div>
+				</div>
 
-			<div class="remake">
-				<img class="difficulty-img" src="./img/restart.webp" onclick="remake()">
-			</div>
-			<div class="left">
-
-				<div class="difficulty">
+				<div class="menu-item difficulty-container">
+					<div>Сложность</div>
+					<div class="difficulty">
 					<label onclick="remake()">
 						<input type="radio" name="difficulty" value="easy" >
+						<!--
 						<img class="difficulty-img" src="./img/easy.png" >
+						-->
+						<div class="difficulty-block green"></div>
 					</label>
 
 					<label onclick="remake()">
 						<input type="radio" name="difficulty" value="medium" checked="" >
-						<img class="difficulty-img" src="./img/medium.png"   >
+						<div class="difficulty-block yellow" ></div>
+						<!--
+						<img class="difficulty-img" src="./img/medium.png">
+					-->
 					</label>
 
 					<label onclick="remake()">
 						<input type="radio" name="difficulty" value="hard">
+						<div class="difficulty-block red"></div>
+						<!--
 						<img class="difficulty-img" src="./img/hard.png" >
+					-->
 					</label>
 				</div>
+				</div>
 
-			<div class="bombs-wrapper">
-				<p>Бобм:</p>
-				<div ><p class="bombs">100</p></div>
-			</div>
-			</div>
 
-		</div>
-		<br>
-		<div class="game-wrapper">
+
+				<div class="menu-item">
+					<p style="font-size: 26px;">Без флагов</p>
+					<input type="checkbox" class="no-flag" name="no-flag">
+				</div>
+
 			
+			</div>
+			<div class="remake">
+				<img class="difficulty-img" src="./img/restart.webp" onclick="remake()">
+			</div>
+
 		</div>
-	</div>
-	<div class="pop-up-menu victory">
+		
+
+		<div class="pop-up-menu victory">
 		<div >
 			<p> Вы победили</p>
 			
@@ -68,6 +87,17 @@
 			</div>
 		</div>
 	</div>
+
+
+
+
+
+		<div class="game-wrapper">
+			
+		</div>
+
+	</div>
+	
 
 	<script src="script.js"type="text/javascript"></script>
 </body>
