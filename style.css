@@ -79,6 +79,7 @@ p{
 	flex-wrap: nowrap;
 	justify-content: space-between;
 }
+/*
 .field-cell{
 	width: 44px;
 	height: 44px;
@@ -93,6 +94,22 @@ p{
 	cursor: default;
 	font-size: 28px;
 }
+*/
+.field-cell{
+	width: 4vh;
+	height: 4vh;
+	margin: 0px;
+	background-color: #C0C0C0;
+	border-right: 0.45vh outset #D3D3D3;
+	border-bottom: 0.45vh outset #D3D3D3;
+	border-top: 0.45vh outset #DCDCDC;
+	border-left: 0.45vh outset #DCDCDC;
+	box-sizing: border-box;
+	text-align: center;
+	cursor: default;
+	font-size: 3vh;
+}
+
 
 .field-cell > img{
 	width: 100%;

@@ -12,7 +12,7 @@ class Game{
 	isDead = false;
 	gameWon = false;
 	gameStart = false;
-
+	time = 0;
 	constructor(x, y, bombs){
         this.x = x;
         this.y = y;
@@ -22,6 +22,7 @@ class Game{
         this.generate_field();
         //this.set_weights();
 	}
+
 
 	//генерация поля
 	generate_field(){
@@ -218,6 +219,7 @@ class Game{
 		if (this.starGame){
 			this.generate_bombs(i, j);
 			this.set_weights();
+			setInterval(game_set_time, 1000);
 			this.starGame = false;
 		}
 
@@ -441,8 +443,6 @@ function hide(){
 	div[0].style.display = "none";
 }
 
-
-
 document.addEventListener("load", remake());
 
 //new Game(3, 3, 1)
@@ -450,11 +450,30 @@ function remake(){
 	hide();
 	radio = document.getElementsByName("difficulty");
 		//a = new Game(10, 4, 4);
+	div = getStyleSheet("field-cell");
 	if (radio[0].checked){
 		a = new Game(8, 8, 10);
 	} else if (radio[1].checked){
-		a = new Game(14, 14, 40);
+		a = new Game(16, 16, 40);
 	} else {
-		a = new Game(18, 18, 80);
+		a = new Game(20, 20, 90);
 	}
+}
+
+function getStyleSheet(unique_title) {
+  for(var i=0; i<document.styleSheets.length; i++) {
+    var sheet = document.styleSheets[i];
+    if(sheet.title == unique_title) {
+      return sheet;
+    }
+  }
+}
+
+//счетчик времени
+
+
+function game_set_time(){
+	let timeDiv = document.getElementsByClassName("time")[0];
+	timeDiv.innerHTML = Number(timeDiv.innerHTML) + 1;
+
 }
